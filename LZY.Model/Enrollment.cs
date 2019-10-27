@@ -9,7 +9,7 @@ namespace LZY.Model
    public class Enrollment : IEntityBase
     {
         [Key]
-        public Guid Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Guid Id { get; set; }
         public Guid StudentId { get; set; }
         public Guid CourseId { get; set; }
         public CourseGrade Grade { get; set; }

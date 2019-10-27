@@ -13,34 +13,21 @@ namespace LZY.DataAccess.EntityFramework.Data
     public class DbInitializer
     {
         static SchoolDbContext _Context;
-        static Student[] students = new Student[]
-                {
+
+
+        public static void Intializer(SchoolDbContext context)
+        {
+            _Context = context;
+            context.Database.EnsureCreated();//创建数据库，如果创建了，则不会重新创建
+            var students = new Student[]
+               {
                 new Student{ SName="XiaoMing",EnrollmentTime=DateTime.Parse("2018-02-01")},
                 new Student{ SName="XiaoMin",EnrollmentTime=DateTime.Parse("2018-02-03")},
                 new Student{ SName="XiaoMi",EnrollmentTime=DateTime.Parse("2018-02-04")},
                 new Student{ SName="XiaoM",EnrollmentTime=DateTime.Parse("2018-02-05")},
                 new Student{ SName="Xiao",EnrollmentTime=DateTime.Parse("2018-02-06")}
-                };
-        static Course[] course = new Course[]
-                {
-                new Course{ Title="Chinese",Credits=10},
-                new Course{ Title="Biological",Credits=2},
-                new Course{ Title="Physical",Credits=7},
-                new Course{ Title="Math",Credits=10}
-                };
-        public static void Intializer(SchoolDbContext context)
-        {
-            _Context = context;
-            context.Database.EnsureCreated();//创建数据库，如果创建了，则不会重新创建
+               };
 
-
-            _AddStudent();//添加学生
-            _AddCourse();//添加科目
-            _AddEnrollment();//登记成绩
-        }
-
-        private static void _AddStudent()
-        {
             if (_Context.Students.Any())//有数据则不执行
             {
                 return;
@@ -51,10 +38,14 @@ namespace LZY.DataAccess.EntityFramework.Data
                 _Context.Students.Add(s);
                 _Context.SaveChanges();
             }
-        }
 
-        public static void _AddCourse()
-        {
+            var course = new Course[]
+              {
+                new Course{ Title="Chinese",Credits=10},
+                new Course{ Title="Biological",Credits=2},
+                new Course{ Title="Physical",Credits=7},
+                new Course{ Title="Math",Credits=10}
+              };
             if (_Context.Courses.Any())
             {
                 return;
@@ -64,9 +55,8 @@ namespace LZY.DataAccess.EntityFramework.Data
                 _Context.Courses.Add(c);
                 _Context.SaveChanges();
             }
-        }
-        public static void _AddEnrollment()
-        {
+
+
             if (_Context.Courses.Any())
             {
                 return;
@@ -103,6 +93,20 @@ namespace LZY.DataAccess.EntityFramework.Data
                 _Context.Enrollments.Add(e);
                 _Context.SaveChanges();
             }
+        }
+
+        private static void _AddStudent()
+        {
+            
+        }
+
+        public static void _AddCourse()
+        {
+           
+        }
+        public static void _AddEnrollment()
+        {
+            
         }
 
 

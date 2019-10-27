@@ -8,6 +8,6 @@ namespace LZY.Model
    public class Department : IEntityBase
     {
         [Key]
-        public Guid Id { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Guid Id { get; set; }
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using LZY.DataAccess.EntityFramework;
+using LZY.DataAccess.EntityFramework.Data;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -13,16 +15,31 @@ namespace LZY.School
 {
     public class Program
     {
+        /// <summary>
+        /// 依赖注入
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             var host = CreateWebHostBuilder(args);
             using (var scope = host.Services.CreateScope())
-            { 
-                var services=
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var context = services.GetRequiredService<SchoolDbContext>();
+                    DbInitializer.Intializer(context);
+                }
+                catch (Exception e)
+                {
+
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(e, "初始化失败");
+                }
 
             }
 
-                host.Run();
+            host.Run();
             //CreateWebHostBuilder(args).Build().Run();
         }
 

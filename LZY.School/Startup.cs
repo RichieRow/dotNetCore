@@ -35,7 +35,7 @@ namespace LZY.School
 
 
             // 添加 EF Core 框架，连接串在appsettings设置
-            services.AddDbContext<SchoolDbContext>(d => d.UseSqlServer(Configuration.GetConnectionString("ConnectionStrings")));
+            services.AddDbContext<SchoolDbContext>(d => d.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
