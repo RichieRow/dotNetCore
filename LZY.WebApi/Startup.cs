@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LZY.DataAccess;
 using LZY.DataAccess.EntityFramework;
+using LZY.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,7 +32,26 @@ namespace LZY.WebApi
             // 添加 EF Core 框架，连接串在appsettings设置
             services.AddDbContext<SchoolDbContext>(d => d.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            #region 域控制器相关的依赖注入服务清单
+            services.AddTransient<IEntityRepository<Student>, EntityRepository<Student>>();
+            services.AddTransient<IEntityRepository<Course>, EntityRepository<Course>>();
+            services.AddTransient<IEntityRepository<Enrollment>, EntityRepository<Enrollment>>();
+            #endregion
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            //跨域
+            services.AddCors(options =>
+            {
+                options.AddPolicy("any", builder =>
+                {
+                    builder.AllowAnyOrigin() //允许任何来源的主机访问
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();//指定处理cookie
+                });
+            });
+
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,8 +65,8 @@ namespace LZY.WebApi
             {
                 app.UseHsts();
             }
-
-            app.UseHttpsRedirection();
+            app.UseCors("any");
+            app.UseHttpsRedirection();//跨域
             app.UseMvc();
         }
     }

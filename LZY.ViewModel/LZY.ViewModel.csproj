@@ -4,4 +4,9 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LZY.DataAccess\LZY.DataAccess.csproj" />
+    <ProjectReference Include="..\LZY.Model\LZY.Model.csproj" />
+  </ItemGroup>
+
 </Project>
