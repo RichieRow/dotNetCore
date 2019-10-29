@@ -11,9 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace LZY.WebApi.Controllers
 {
  
-    [Route("api/[controller]")]
-    [ApiController]
-    public class StudentController : ControllerBase
+
+    public class StudentController : BaseController
     {
         private readonly IEntityRepository<Student> _Student;
         public StudentController(IEntityRepository<Student> student)
@@ -28,7 +27,7 @@ namespace LZY.WebApi.Controllers
         }
 
         [HttpPost]
-        public IQueryable Get()
+        public IQueryable GetList()
         {
             var list = _Student.GetAllIncluding(x => x.Enrollments);
             return list;

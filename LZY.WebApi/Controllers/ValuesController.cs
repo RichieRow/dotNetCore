@@ -6,9 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace LZY.WebApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ValuesController : ControllerBase
+  
+    public class ValuesController : BaseController
     {
         // GET api/values
         [HttpGet]

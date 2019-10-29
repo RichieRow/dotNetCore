@@ -9,11 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace LZY.WebApi.Controllers
 {
 
-    [EnableCors("CorsPolicy")]//跨域
-    [Route("api/[controller]")]
-    [ApiController]
-
-    public class CourseController : ControllerBase
+  
+    public class CourseController : BaseController
     {
         // GET: api/Course
         [HttpGet]
